@@ -6,7 +6,7 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "target": "viewer-bc-ordrestyring",
+    "target": "montage-bc-ordrestyring",
     "rewrites": [
       {
         "source": "**",
