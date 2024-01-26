@@ -20,8 +20,8 @@ class CasesFetcher extends ConsumerWidget {
         itemBuilder: (context, index) {
           final caseItem = cases[index];
 
-          final budget = caseItem.estimatedHours.productionEstimatedHour;
-          final hourSpent = caseItem.hourAggregate?.productionHourSpent ?? 0;
+          final budget = caseItem.estimatedHours.montageEstimatedHour;
+          final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),

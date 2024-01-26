@@ -20,7 +20,7 @@ class TopBar extends StatelessWidget {
             Clock(),
             Spacer(),
             Text(
-              'Ordrer i produktion',
+              'Ordrer i montage',
               style: TextStyle(
                 fontSize: 50,
                 fontFamily: "SimplonBPRegular",
