@@ -28,23 +28,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  intl: ^0.18.1
   flutter:
     sdk: flutter
 
+  ordrestyring_common:
+    path: ../ordrestyring_common
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  graphql_flutter: ^5.1.2
 
-  firebase_core: ^2.22.0
-  cloud_firestore: ^4.13.0
-  hooks_riverpod: ^2.4.5
-  flutter_hooks: ^0.20.3
-
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
@@ -56,11 +49,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
-  custom_lint: ^0.5.6
-  riverpod_lint: ^2.3.3
-  build_runner: ^2.4.7
-  freezed: ^2.4.6
-  json_serializable: ^6.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

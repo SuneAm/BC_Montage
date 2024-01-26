@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:intl/intl.dart';
+import 'package:ordrestyring_common/ordrestyring_common.dart';
 
 import 'clock.dart';
 

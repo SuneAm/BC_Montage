@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart'; // Flutter UI framework
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ordrestyring_common/ordrestyring_common.dart'
+    show DefaultFirebaseOptions, Firebase, ProviderScope, MyHttpOverrides;
 
-import 'http_overrides.dart'; // override
 import 'src/app.dart';
-import 'src/firebase_options.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();

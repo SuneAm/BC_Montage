@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ordrestyring_display/src/common_widgets/async_widgets/common_async_widget.dart';
-import 'package:ordrestyring_display/src/features/case/domain/case.dart';
-import 'package:ordrestyring_display/src/features/case/domain/hour_aggregate.dart';
-import 'package:ordrestyring_display/src/features/case/presentation/case_controller.dart';
+import 'package:ordrestyring_common/ordrestyring_common.dart';
 
 class CasesFetcher extends ConsumerWidget {
   const CasesFetcher({super.key});
@@ -24,7 +20,7 @@ class CasesFetcher extends ConsumerWidget {
         itemBuilder: (context, index) {
           final caseItem = cases[index];
 
-          final budget = caseItem.productionEstimatedHour;
+          final budget = caseItem.estimatedHours.productionEstimatedHour;
           final hourSpent = caseItem.hourAggregate?.productionHourSpent ?? 0;
 
           return Container(
@@ -170,40 +166,4 @@ class ProgressBar extends StatelessWidget {
       ),
     );
   }
-}
-
-extension on Case {
-  double get productionEstimatedHour =>
-      estimatedHours?.estimatedProductionHour ?? 0;
-}
-
-extension on HourAggregate {
-  double get productionHourSpent {
-    final calculationTypes = CalculationHourTypes.values.where(
-        (element) => element.calculationTypes == CalculationTypes.Produktion);
-    final filteredList = hourTypes
-        .where((hour) =>
-            calculationTypes.any((type) => hour.name.contains(type.name)))
-        .toList();
-
-    return filteredList.fold(
-        0.0,
-        (previousValue, element) =>
-            (element.totalWorkHours ?? 0.0) + previousValue);
-  }
-}
-
-enum CalculationTypes { Produktion }
-
-enum CalculationHourTypes {
-  productionProjectManager.production('Produktion Projektleder'),
-  productionJoiner.production('Produktion Snedker'),
-  VrkfrertidpOrdre.production('Værkførertid på Ordre'),
-  ;
-
-  const CalculationHourTypes.production(this.name)
-      : calculationTypes = CalculationTypes.Produktion;
-
-  final String name;
-  final CalculationTypes calculationTypes;
 }
