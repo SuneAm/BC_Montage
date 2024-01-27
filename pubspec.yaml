@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  #  ordrestyring_common:
+  #    git:
+  #      url: https://github.com/SuneAm/BC_common.git
   ordrestyring_common:
     path: ../ordrestyring_common
 
