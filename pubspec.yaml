@@ -35,7 +35,7 @@ dependencies:
   #    git:
   #      url: https://github.com/SuneAm/BC_common.git
   ordrestyring_common:
-    path: ../ordrestyring_common
+    path: ../BC_common
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
