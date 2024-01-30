@@ -35,10 +35,10 @@ class Clock extends HookWidget {
         const Text(
           ":",
           style: TextStyle(
-            fontSize: 60.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: "digital-7",
-            color: Color.fromARGB(255, 65, 65, 65),
+            color: Color.fromARGB(62, 65, 65, 65),
           ),
         ),
         const SizedBox(width: _edgeWidth),

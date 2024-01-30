@@ -13,16 +13,16 @@ class TopBar extends StatelessWidget {
     return const ColoredBox(
       color: Color.fromARGB(255, 255, 255, 255),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Clock(),
+            //Clock(),
             Spacer(),
             Text(
-              'Ordrer i montage',
+              'BC - Ordrer i montage',
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 20,
                 fontFamily: "SimplonBPRegular",
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 53, 53, 53),
@@ -30,18 +30,18 @@ class TopBar extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              'Dato: ',
+              'Dato:',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 11,
                 fontFamily: "SimplonBPRegular",
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
                 color: Color.fromARGB(255, 53, 53, 53),
               ),
             ),
-            SizedBox(width: 4),
+            SizedBox(width: 2),
             _DateWidget(),
-            SizedBox(width: 12),
+            // SizedBox(width: 4),
           ],
         ),
       ),
@@ -74,9 +74,9 @@ class _DateWidget extends HookWidget {
     }, const []);
 
     return Text(
-      DateFormat('dd - MM - yyyy').format(currentDate.value.toLocal()),
+      DateFormat('dd-MM-yyyy').format(currentDate.value.toLocal()),
       style: const TextStyle(
-        fontSize: 24,
+        fontSize: 10,
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 53, 53, 53),
       ),
