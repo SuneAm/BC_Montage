@@ -88,6 +88,7 @@ class CasesFetcher extends ConsumerWidget {
                       showUsed: hourSpent,
                       // from sunes fix
                       height: 20,
+                      usedFontSize: 14,
                     )
                   ],
                 ),
