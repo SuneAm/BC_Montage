@@ -79,7 +79,7 @@ class CasesFetcher extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Timer Forbrugt", style: medNumbers),
+                    Text("Forbrugt tid", style: medNumbers),
                     const SizedBox(height: 2),
                     ProgressBar(
                       width: 100,
