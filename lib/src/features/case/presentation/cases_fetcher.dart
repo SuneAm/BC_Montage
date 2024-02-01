@@ -28,6 +28,8 @@ class CasesFetcher extends ConsumerWidget {
           final budget = caseItem.estimatedHours.montageEstimatedHour;
           final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
+          final address = caseItem.deliveryAddress?.address;
+
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
             margin: const EdgeInsets.only(bottom: 4),
@@ -72,6 +74,25 @@ class CasesFetcher extends ConsumerWidget {
                           fontSize: 10,
                         ),
                       ),
+                      if (address != null) ...[
+                        const SizedBox(height: 4),
+                        InkWell(
+                          onTap: () => openInGoogleMap(address),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.map,
+                                color: Colors.blue,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                address,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -114,5 +135,16 @@ class CasesFetcher extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  Future<void> openInGoogleMap(String address) async {
+    final url = Uri.parse('https://maps.google.com/?q=$address');
+    try {
+      if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      debugPrint('Failed to open link: $e');
+    }
   }
 }
