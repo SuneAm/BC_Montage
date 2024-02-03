@@ -9,6 +9,7 @@ class CasesFetcher extends ConsumerWidget {
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 49, 49, 49),
       );
+
   TextStyle get hourSpent => const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -29,6 +30,8 @@ class CasesFetcher extends ConsumerWidget {
           final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
           final address = caseItem.deliveryAddress?.address;
+          final postalCode = caseItem.deliveryAddress?.postalCode;
+          final city = caseItem.deliveryAddress?.city;
 
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
@@ -76,21 +79,21 @@ class CasesFetcher extends ConsumerWidget {
                       ),
                       if (address != null) ...[
                         const SizedBox(height: 4),
-                        InkWell(
-                          onTap: () => openInGoogleMap(address),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.map,
+                        Row(
+                          children: [
+                            InkResponse(
+                              onTap: () => openInGoogleMap(address),
+                              child: const Icon(
+                                Icons.location_on,
                                 color: Colors.blue,
                                 size: 20,
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                address,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(address),
+                            if (postalCode != null) Text(', $postalCode'),
+                            if (city != null) Text(', $city'),
+                          ],
                         ),
                       ],
                     ],
