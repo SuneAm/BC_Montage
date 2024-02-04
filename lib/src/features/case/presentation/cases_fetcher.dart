@@ -33,8 +33,8 @@ class CasesFetcher extends ConsumerWidget {
           final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
           final address = caseItem.deliveryAddress?.address;
-          final postalCode = caseItem.deliveryAddress?.postalCode;
-          final city = caseItem.deliveryAddress?.city;
+          final postalCode = caseItem.deliveryAddress?.postalCode ?? '';
+          final city = caseItem.deliveryAddress?.city ?? '';
 
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
@@ -53,30 +53,39 @@ class CasesFetcher extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            caseItem.caseNumber,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 49, 49, 49),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                text: '',
+                                style: DefaultTextStyle.of(context).style,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: caseItem.caseNumber,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: Color.fromARGB(255, 49, 49, 49),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' - ${caseItem.responsibleUser.fullName}',
+                                    style: const TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 49, 49, 49),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 2),
-                          Text(
-                            '- ${caseItem.responsibleUser.fullName}',
-                            style: const TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 49, 49, 49),
-                            ),
-                          )
                         ],
                       ),
                       const SizedBox(height: 4),
                       Text(
                         caseItem.projectName,
                         style: const TextStyle(
-                          //fontWeight: FontWeight.bold,
                           fontSize: 10,
                         ),
                       ),
@@ -93,9 +102,10 @@ class CasesFetcher extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(width: 4),
-                            Text(address),
-                            if (postalCode != null) Text(', $postalCode'),
-                            if (city != null) Text(', $city'),
+                            Expanded(
+                              child: Text(
+                                  '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city'),
+                            ),
                           ],
                         ),
                       ],

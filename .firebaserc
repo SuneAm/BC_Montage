@@ -1,0 +1,13 @@
+{
+  "projects": {},
+  "targets": {
+    "bc-ordrestyrring": {
+      "hosting": {
+        "montage-bc-ordrestyring": [
+          "montage-bc-ordrestyring"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
