@@ -36,6 +36,10 @@ class CasesFetcher extends ConsumerWidget {
           final postalCode = caseItem.deliveryAddress?.postalCode ?? '';
           final city = caseItem.deliveryAddress?.city ?? '';
 
+          final contactPerson = caseItem.contactPerson;
+          final contactPersonName = contactPerson?.name ?? '';
+          final phoneNumber = contactPerson?.phoneNumber ?? '';
+
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
             margin: const EdgeInsets.only(bottom: 4),
@@ -90,7 +94,7 @@ class CasesFetcher extends ConsumerWidget {
                         ),
                       ),
                       if (address != null) ...[
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 6),
                         Row(
                           children: [
                             InkResponse(
@@ -109,6 +113,29 @@ class CasesFetcher extends ConsumerWidget {
                           ],
                         ),
                       ],
+                      if (contactPerson != null) ...[
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            if (phoneNumber.isNotEmpty)
+                              InkResponse(
+                                onTap: () => openPhoneApp(phoneNumber),
+                                child: const Icon(
+                                  Icons.phone,
+                                  color: Colors.blue,
+                                  size: 20,
+                                ),
+                              ),
+                            const SizedBox(width: 4),
+                            if (contactPersonName.isNotEmpty ||
+                                phoneNumber.isNotEmpty)
+                              Expanded(
+                                child: Text(
+                                    '$contactPersonName ${phoneNumber.isNotEmpty ? '| (+45) $phoneNumber' : ''}'),
+                              ),
+                          ],
+                        ),
+                      ]
                     ],
                   ),
                 ),
@@ -158,6 +185,17 @@ class CasesFetcher extends ConsumerWidget {
     try {
       if (!await launchUrl(url)) {
         throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      debugPrint('Failed to open link: $e');
+    }
+  }
+
+  Future<void> openPhoneApp(String phoneNumber) async {
+    final launchUri = Uri(scheme: 'tel', path: '+45$phoneNumber');
+    try {
+      if (!await launchUrl(launchUri)) {
+        throw Exception('Could not launch $launchUri');
       }
     } catch (e) {
       debugPrint('Failed to open link: $e');
