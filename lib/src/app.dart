@@ -7,10 +7,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Barlby Carlsson Montage',
       debugShowCheckedModeBanner: false, // Hide debug banner in the app
-      home: MyHomePage(), // The main content of the app
+      theme: ThemeData(
+        colorSchemeSeed: const Color(0xffe86f25),
+        iconTheme: const IconThemeData(color: Color(0xffe86f25)),
+      ),
+      home: const MyHomePage(),
     );
   }
 }

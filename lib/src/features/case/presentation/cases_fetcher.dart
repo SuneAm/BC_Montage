@@ -69,11 +69,7 @@ class CasesFetcher extends ConsumerWidget {
                         Row(
                           children: [
                             if (hasComments) ...[
-                              const Icon(
-                                Icons.comment,
-                                size: 16,
-                                color: Colors.blue,
-                              ),
+                              const Icon(Icons.comment, size: 16),
                               const SizedBox(width: 4),
                             ],
                             Expanded(
@@ -120,7 +116,6 @@ class CasesFetcher extends ConsumerWidget {
                                 onTap: () => openInGoogleMap(address),
                                 child: const Icon(
                                   Icons.location_on,
-                                  color: Colors.blue,
                                   size: 20,
                                 ),
                               ),
@@ -141,7 +136,6 @@ class CasesFetcher extends ConsumerWidget {
                                   onTap: () => openPhoneApp(phoneNumber),
                                   child: const Icon(
                                     Icons.phone,
-                                    color: Colors.blue,
                                     size: 20,
                                   ),
                                 ),
