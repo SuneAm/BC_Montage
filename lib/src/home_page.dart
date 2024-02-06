@@ -12,7 +12,9 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 93, 93, 93),
       body: Container(
         alignment: Alignment.topCenter,
-        decoration: const BoxDecoration(color: Color.fromARGB(80, 155, 155, 155)),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(80, 155, 155, 155),
+        ),
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

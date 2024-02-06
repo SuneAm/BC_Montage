@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ordrestyring_common/ordrestyring_common.dart';
 
-import 'clock.dart';
-
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Color.fromARGB(255, 255, 255, 255),
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/appbar_background.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         child: Row(
