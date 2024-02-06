@@ -26,7 +26,7 @@ class CaseCommentDialog extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'Note til montage',
+                      'Note',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
