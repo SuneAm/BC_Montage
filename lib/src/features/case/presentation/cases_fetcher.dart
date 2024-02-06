@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ordrestyring_common/ordrestyring_common.dart';
+import 'package:ordrestyring_montage/src/features/case/presentation/case_comment_dialog.dart';
 
 final _watchMontageCases = StreamProvider<List<Case>>(
     (ref) => ref.watch(caseRepoProvider).watchMontageCases());
@@ -40,139 +41,158 @@ class CasesFetcher extends ConsumerWidget {
           final contactPersonName = contactPerson?.name ?? '';
           final phoneNumber = contactPerson?.phoneNumber ?? '';
 
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
-            margin: const EdgeInsets.only(bottom: 4),
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(6.0),
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                text: '',
-                                style: DefaultTextStyle.of(context).style,
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: caseItem.caseNumber,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Color.fromARGB(255, 49, 49, 49),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        ' - ${caseItem.responsibleUser.fullName}',
-                                    style: const TextStyle(
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 49, 49, 49),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        caseItem.projectName,
-                        style: const TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                      if (address != null) ...[
-                        const SizedBox(height: 6),
+          final hasComments =
+              caseItem.comments != null && caseItem.comments!.isNotEmpty;
+
+          return InkWell(
+            onTap: hasComments
+                ? () => showDialog(
+                      context: context,
+                      builder: (_) => CaseCommentDialog(caseItem.comments),
+                    )
+                : null,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+              margin: const EdgeInsets.only(bottom: 4),
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(6.0),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Row(
                           children: [
-                            InkResponse(
-                              onTap: () => openInGoogleMap(address),
-                              child: const Icon(
-                                Icons.location_on,
+                            if (hasComments) ...[
+                              const Icon(
+                                Icons.comment,
+                                size: 16,
                                 color: Colors.blue,
-                                size: 20,
                               ),
-                            ),
-                            const SizedBox(width: 4),
+                              const SizedBox(width: 4),
+                            ],
                             Expanded(
-                              child: Text(
-                                  '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city'),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '',
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: caseItem.caseNumber,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: Color.fromARGB(255, 49, 49, 49),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          ' - ${caseItem.responsibleUser.fullName}',
+                                      style: const TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 49, 49, 49),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      ],
-                      if (contactPerson != null) ...[
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            if (phoneNumber.isNotEmpty)
+                        const SizedBox(height: 4),
+                        Text(
+                          caseItem.projectName,
+                          style: const TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        if (address != null) ...[
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
                               InkResponse(
-                                onTap: () => openPhoneApp(phoneNumber),
+                                onTap: () => openInGoogleMap(address),
                                 child: const Icon(
-                                  Icons.phone,
+                                  Icons.location_on,
                                   color: Colors.blue,
                                   size: 20,
                                 ),
                               ),
-                            const SizedBox(width: 4),
-                            if (contactPersonName.isNotEmpty ||
-                                phoneNumber.isNotEmpty)
+                              const SizedBox(width: 4),
                               Expanded(
                                 child: Text(
-                                    '$contactPersonName ${phoneNumber.isNotEmpty ? '| (+45) $phoneNumber' : ''}'),
+                                    '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city'),
                               ),
-                          ],
-                        ),
-                      ]
+                            ],
+                          ),
+                        ],
+                        if (contactPerson != null) ...[
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              if (phoneNumber.isNotEmpty)
+                                InkResponse(
+                                  onTap: () => openPhoneApp(phoneNumber),
+                                  child: const Icon(
+                                    Icons.phone,
+                                    color: Colors.blue,
+                                    size: 20,
+                                  ),
+                                ),
+                              const SizedBox(width: 4),
+                              if (contactPersonName.isNotEmpty ||
+                                  phoneNumber.isNotEmpty)
+                                Expanded(
+                                  child: Text(
+                                      '$contactPersonName ${phoneNumber.isNotEmpty ? '| (+45) $phoneNumber' : ''}'),
+                                ),
+                            ],
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Forbrugt tid", style: medNumbers),
+                      const SizedBox(height: 2),
+                      ProgressBar(
+                        width: 100,
+                        limit: budget,
+                        used: hourSpent,
+                        showUsed: hourSpent,
+                        // from sunes fix
+                        height: 20,
+                        usedFontSize: 14,
+                      )
                     ],
                   ),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Forbrugt tid", style: medNumbers),
-                    const SizedBox(height: 2),
-                    ProgressBar(
-                      width: 100,
-                      limit: budget,
-                      used: hourSpent,
-                      showUsed: hourSpent,
-                      // from sunes fix
-                      height: 20,
-                      usedFontSize: 14,
-                    )
-                  ],
-                ),
-                //const SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Budget", style: medNumbers),
-                    const SizedBox(height: 2),
-                    Text(
-                      budget.toStringAsFixed(0),
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                  //const SizedBox(width: 16),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Budget", style: medNumbers),
+                      const SizedBox(height: 2),
+                      Text(
+                        budget.toStringAsFixed(0),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         },
