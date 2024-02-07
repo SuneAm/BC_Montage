@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Barlby Carlsson Montage',
       debugShowCheckedModeBanner: false,
+      // themeMode: ThemeMode.dark,
       theme: AppTheme.lightTheme,
+      // darkTheme: AppTheme.darkTheme,
       home: const MyHomePage(),
     );
   }

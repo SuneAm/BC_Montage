@@ -11,4 +11,9 @@ class AppTheme {
       color: AppColors.kPrimaryColor,
     ),
   );
+
+  static ThemeData darkTheme = ThemeData.dark().copyWith(
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.kPrimaryColor),
+    iconTheme: const IconThemeData(color: AppColors.kPrimaryColor),
+  );
 }

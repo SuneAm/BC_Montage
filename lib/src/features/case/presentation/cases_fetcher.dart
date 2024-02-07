@@ -66,7 +66,7 @@ class CasesFetcher extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        /*Row(
                           children: [
                             if (hasComments) ...[
                               const Icon(Icons.comment, size: 16),
@@ -100,6 +100,31 @@ class CasesFetcher extends ConsumerWidget {
                               ),
                             ),
                           ],
+                        ),*/
+
+                        Row(
+                          children: [
+                            Text(
+                              caseItem.caseNumber,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                            if (hasComments) ...[
+                              const SizedBox(width: 6),
+                              const Icon(Icons.comment, size: 20),
+                            ],
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          caseItem.responsibleUser.fullName,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 49, 49, 49),
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -114,10 +139,7 @@ class CasesFetcher extends ConsumerWidget {
                             children: [
                               InkResponse(
                                 onTap: () => openInGoogleMap(address),
-                                child: const Icon(
-                                  Icons.location_on,
-                                  size: 20,
-                                ),
+                                child: const Icon(Icons.location_on),
                               ),
                               const SizedBox(width: 4),
                               Expanded(
@@ -129,25 +151,19 @@ class CasesFetcher extends ConsumerWidget {
                         ],
                         if (contactPerson != null) ...[
                           const SizedBox(height: 6),
-                          Row(
-                            children: [
-                              if (phoneNumber.isNotEmpty)
+                          if (contactPersonName.isNotEmpty)
+                            Text(contactPersonName),
+                          if (phoneNumber.isNotEmpty)
+                            Row(
+                              children: [
+                                Text('(+45) $phoneNumber'),
+                                const SizedBox(width: 4),
                                 InkResponse(
                                   onTap: () => openPhoneApp(phoneNumber),
-                                  child: const Icon(
-                                    Icons.phone,
-                                    size: 20,
-                                  ),
+                                  child: const Icon(Icons.phone),
                                 ),
-                              const SizedBox(width: 4),
-                              if (contactPersonName.isNotEmpty ||
-                                  phoneNumber.isNotEmpty)
-                                Expanded(
-                                  child: Text(
-                                      '$contactPersonName ${phoneNumber.isNotEmpty ? '| (+45) $phoneNumber' : ''}'),
-                                ),
-                            ],
-                          ),
+                              ],
+                            ),
                         ]
                       ],
                     ),
