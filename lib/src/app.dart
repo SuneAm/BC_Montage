@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordrestyring_montage/src/utils/app_theme.dart';
 
 import 'home_page.dart';
 
@@ -9,11 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Barlby Carlsson Montage',
-      debugShowCheckedModeBanner: false, // Hide debug banner in the app
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xffe86f25),
-        iconTheme: const IconThemeData(color: Color(0xffe86f25)),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
       home: const MyHomePage(),
     );
   }

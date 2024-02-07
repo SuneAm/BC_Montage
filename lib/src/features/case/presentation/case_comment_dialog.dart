@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordrestyring_montage/src/utils/app_theme.dart';
 
 class CaseCommentDialog extends StatelessWidget {
   const CaseCommentDialog(this.comments, {super.key});
@@ -22,7 +23,7 @@ class CaseCommentDialog extends StatelessWidget {
                   topRight: Radius.circular(5),
                 ),
                 child: ColoredBox(
-                  color: Color.fromARGB(255, 51, 152, 240),
+                  color: AppColors.kPrimaryColor,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
