@@ -9,6 +9,7 @@ class CaseCommentDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.grey[800],
       child: SizedBox(
         width: 400,
         child: Column(
@@ -26,10 +27,17 @@ class CaseCommentDialog extends StatelessWidget {
                   color: AppColors.kPrimaryColor,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Note',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                      textAlign: TextAlign.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.comment, size: 20, color: Colors.white),
+                        SizedBox(width: 2),
+                        Text(
+                          'Noter vedrørende: "casenumber here" ', // caseItem.caseNumber
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -41,7 +49,8 @@ class CaseCommentDialog extends StatelessWidget {
                 horizontal: 16,
               ),
               child: Text('$comments',
-                  style: const TextStyle(color: Colors.black)),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255))),
             ),
           ],
         ),

@@ -21,11 +21,20 @@ class TopBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Clock(),
+            Text(
+              'BC',
+              style: TextStyle(
+                fontSize: 22,
+                fontFamily: "SimplonBPRegular",
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 228, 0, 0),
+              ),
+            ),
             Spacer(),
             Text(
-              'BC - Ordrer i montage',
+              '        Ordrer i montage',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontFamily: "SimplonBPRegular",
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 53, 53, 53),
@@ -35,7 +44,7 @@ class TopBar extends StatelessWidget {
             Text(
               'Dato:',
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 12,
                 fontFamily: "SimplonBPRegular",
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,

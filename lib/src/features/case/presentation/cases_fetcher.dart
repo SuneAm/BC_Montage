@@ -108,31 +108,66 @@ class CasesFetcher extends ConsumerWidget {
                               caseItem.caseNumber,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(" - "),
+                            Text(
+                              caseItem.responsibleUser.fullName,
+                              style: const TextStyle(
                                 fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 49, 49, 49),
                               ),
                             ),
                             if (hasComments) ...[
                               const SizedBox(width: 6),
                               const Icon(Icons.comment, size: 20),
                             ],
+                            const Spacer(),
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Timer brugt", style: medNumbers),
+                                const SizedBox(height: 2),
+                                ProgressBar(
+                                  width: 100,
+                                  limit: budget,
+                                  used: hourSpent,
+                                  showUsed: hourSpent,
+                                  // from sunes fix
+                                  height: 20,
+                                  usedFontSize: 14,
+                                )
+                              ],
+                            ),
+                            //const SizedBox(width: 16),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Budget", style: medNumbers),
+                                const SizedBox(height: 2),
+                                Text(
+                                  budget.toStringAsFixed(0),
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          caseItem.responsibleUser.fullName,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 49, 49, 49),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
+                        //const SizedBox(height: 2),
                         Text(
                           caseItem.projectName,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 11,
                           ),
                         ),
+
                         if (address != null) ...[
                           const SizedBox(height: 6),
                           Row(
@@ -149,6 +184,7 @@ class CasesFetcher extends ConsumerWidget {
                             ],
                           ),
                         ],
+
                         if (contactPerson != null) ...[
                           const SizedBox(height: 6),
                           if (contactPersonName.isNotEmpty)
@@ -167,39 +203,6 @@ class CasesFetcher extends ConsumerWidget {
                         ]
                       ],
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Forbrugt tid", style: medNumbers),
-                      const SizedBox(height: 2),
-                      ProgressBar(
-                        width: 100,
-                        limit: budget,
-                        used: hourSpent,
-                        showUsed: hourSpent,
-                        // from sunes fix
-                        height: 20,
-                        usedFontSize: 14,
-                      )
-                    ],
-                  ),
-                  //const SizedBox(width: 16),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Budget", style: medNumbers),
-                      const SizedBox(height: 2),
-                      Text(
-                        budget.toStringAsFixed(0),
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
