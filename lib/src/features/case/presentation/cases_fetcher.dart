@@ -66,42 +66,6 @@ class CasesFetcher extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /*Row(
-                          children: [
-                            if (hasComments) ...[
-                              const Icon(Icons.comment, size: 16),
-                              const SizedBox(width: 4),
-                            ],
-                            Expanded(
-                              child: RichText(
-                                text: TextSpan(
-                                  text: '',
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: caseItem.caseNumber,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: Color.fromARGB(255, 49, 49, 49),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          ' - ${caseItem.responsibleUser.fullName}',
-                                      style: const TextStyle(
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 49, 49, 49),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),*/
-
                         Row(
                           children: [
                             Text(
@@ -117,7 +81,7 @@ class CasesFetcher extends ConsumerWidget {
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 49, 49, 49),
+                                // color: Color.fromARGB(255, 49, 49, 49),
                               ),
                             ),
                             if (hasComments) ...[
@@ -186,20 +150,30 @@ class CasesFetcher extends ConsumerWidget {
                         ],
 
                         if (contactPerson != null) ...[
-                          const SizedBox(height: 6),
-                          if (contactPersonName.isNotEmpty)
-                            Text(contactPersonName),
-                          if (phoneNumber.isNotEmpty)
-                            Row(
-                              children: [
-                                Text('(+45) $phoneNumber'),
-                                const SizedBox(width: 4),
-                                InkResponse(
-                                  onTap: () => openPhoneApp(phoneNumber),
-                                  child: const Icon(Icons.phone),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text(
+                                'Kontaktperson:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 4),
+                              if (contactPersonName.isNotEmpty)
+                                Text(contactPersonName),
+                              if (phoneNumber.isNotEmpty)
+                                Row(
+                                  children: [
+                                    SizedBox(width: 4),
+                                    Text('(+45) $phoneNumber'),
+                                    SizedBox(width: 4),
+                                    InkResponse(
+                                      onTap: () => openPhoneApp(phoneNumber),
+                                      child: Icon(Icons.phone),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                            ],
+                          ),
                         ]
                       ],
                     ),
