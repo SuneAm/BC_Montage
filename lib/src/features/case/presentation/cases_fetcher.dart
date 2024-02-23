@@ -201,7 +201,7 @@ class CasesFetcher extends ConsumerWidget {
   }
 
   Future<void> openPhoneApp(String phoneNumber) async {
-    final launchUri = Uri(scheme: 'tel', path: '+45$phoneNumber');
+    final launchUri = Uri(scheme: 'tel', path: phoneNumber);
     try {
       if (!await launchUrl(launchUri)) {
         throw Exception('Could not launch $launchUri');
