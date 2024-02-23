@@ -96,7 +96,7 @@ class CasesFetcher extends ConsumerWidget {
                                 Text("Timer brugt", style: medNumbers),
                                 const SizedBox(height: 2),
                                 ProgressBar(
-                                  width: 100,
+                                  width: 140,
                                   limit: budget,
                                   used: hourSpent,
                                   showUsed: hourSpent,
