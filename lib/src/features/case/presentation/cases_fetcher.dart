@@ -37,12 +37,10 @@ class CasesFetcher extends ConsumerWidget {
           final postalCode = caseItem.deliveryAddress?.postalCode ?? '';
           final city = caseItem.deliveryAddress?.city ?? '';
 
-          final contactPerson = caseItem.contactPerson;
-          final contactPersonName = contactPerson?.name ?? '';
-          final phoneNumber = contactPerson?.phoneNumber ?? '';
-
           final hasComments =
               caseItem.comments != null && caseItem.comments!.isNotEmpty;
+
+          final contactPersons = caseItem.contactPersons ?? [];
 
           return InkWell(
             onTap: hasComments
@@ -75,7 +73,7 @@ class CasesFetcher extends ConsumerWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            Text(" - "),
+                            const Text(" - "),
                             Text(
                               caseItem.responsibleUser.fullName,
                               style: const TextStyle(
@@ -148,33 +146,37 @@ class CasesFetcher extends ConsumerWidget {
                             ],
                           ),
                         ],
-
-                        if (contactPerson != null) ...[
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Text(
-                                'Kontaktperson:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(width: 4),
-                              if (contactPersonName.isNotEmpty)
-                                Text(contactPersonName),
-                              if (phoneNumber.isNotEmpty)
-                                Row(
-                                  children: [
-                                    SizedBox(width: 4),
-                                    Text('(+45) $phoneNumber'),
-                                    SizedBox(width: 4),
-                                    InkResponse(
-                                      onTap: () => openPhoneApp(phoneNumber),
-                                      child: Icon(Icons.phone),
+                        if (contactPersons.isNotEmpty)
+                          ...contactPersons.map(
+                            (person) {
+                              final name = person.name;
+                              final number = person.phoneNumber;
+                              return Row(
+                                children: [
+                                  const Text(
+                                    'Kontaktperson:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                ),
-                            ],
+                                  ),
+                                  const SizedBox(width: 4),
+                                  if (name.isNotEmpty) Text(name),
+                                  if (number.isNotEmpty)
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 4),
+                                        Text('(+45) $number'),
+                                        const SizedBox(width: 4),
+                                        InkResponse(
+                                          onTap: () => openPhoneApp(number),
+                                          child: const Icon(Icons.phone),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              );
+                            },
                           ),
-                        ]
                       ],
                     ),
                   ),
