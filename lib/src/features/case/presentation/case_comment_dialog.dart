@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ordrestyring_montage/src/utils/app_theme.dart';
+//import 'package:ordrestyring_montage/src/utils/app_theme.dart';
 
 class CaseCommentDialog extends StatelessWidget {
   const CaseCommentDialog(this.comments, {super.key});
@@ -23,18 +23,23 @@ class CaseCommentDialog extends StatelessWidget {
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
                 ),
-                child: ColoredBox(
-                  color: AppColors.kPrimaryColor,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/appbar_background.png'),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.comment, size: 20, color: Colors.white),
-                        SizedBox(width: 2),
+                        SizedBox(width: 4),
                         Text(
-                          'Noter vedrørende: "casenumber here" ', // caseItem.caseNumber
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          'Vedrørende: 50220', // caseItem.caseNumber
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                           textAlign: TextAlign.center,
                         ),
                       ],

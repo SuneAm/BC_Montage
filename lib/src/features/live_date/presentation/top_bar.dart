@@ -32,7 +32,7 @@ class TopBar extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              '        Ordrer i montage',
+              '                Ordrer i Montage',
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: "SimplonBPRegular",

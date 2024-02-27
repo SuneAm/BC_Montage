@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "BC-Ordrestyrring": "bc-ordrestyrring"
+  },
   "targets": {
     "bc-ordrestyrring": {
       "hosting": {

@@ -9,13 +9,13 @@ class CasesFetcher extends ConsumerWidget {
   const CasesFetcher({super.key});
 
   TextStyle get medNumbers => const TextStyle(
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 49, 49, 49),
       );
 
   TextStyle get hourSpent => const TextStyle(
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 49, 49, 49),
       );
@@ -50,7 +50,8 @@ class CasesFetcher extends ConsumerWidget {
                     )
                 : null,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 6.0),
               margin: const EdgeInsets.only(bottom: 4),
               decoration: BoxDecoration(
                 border: Border.all(),
@@ -59,7 +60,7 @@ class CasesFetcher extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 2),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,18 +71,10 @@ class CasesFetcher extends ConsumerWidget {
                               caseItem.caseNumber,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                                fontSize: 16,
                               ),
                             ),
-                            const Text(" - "),
-                            Text(
-                              caseItem.responsibleUser.fullName,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                // color: Color.fromARGB(255, 49, 49, 49),
-                              ),
-                            ),
+
                             if (hasComments) ...[
                               const SizedBox(width: 6),
                               const Icon(Icons.comment, size: 20),
@@ -99,8 +92,8 @@ class CasesFetcher extends ConsumerWidget {
                                   used: hourSpent,
                                   showUsed: hourSpent,
                                   // from sunes fix
-                                  height: 20,
-                                  usedFontSize: 14,
+                                  height: 16,
+                                  usedFontSize: 11,
                                 )
                               ],
                             ),
@@ -114,7 +107,7 @@ class CasesFetcher extends ConsumerWidget {
                                   budget.toStringAsFixed(0),
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 14,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -123,6 +116,15 @@ class CasesFetcher extends ConsumerWidget {
                           ],
                         ),
                         //const SizedBox(height: 2),
+
+                        Text(
+                          caseItem.responsibleUser.fullName,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            // color: Color.fromARGB(255, 49, 49, 49),
+                          ),
+                        ),
                         Text(
                           caseItem.projectName,
                           style: const TextStyle(
@@ -141,7 +143,11 @@ class CasesFetcher extends ConsumerWidget {
                               const SizedBox(width: 4),
                               Expanded(
                                 child: Text(
-                                    '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city'),
+                                  '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city',
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -157,6 +163,7 @@ class CasesFetcher extends ConsumerWidget {
                                     'Kontaktperson:',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      fontSize: 11,
                                     ),
                                   ),
                                   const SizedBox(width: 4),
@@ -165,7 +172,10 @@ class CasesFetcher extends ConsumerWidget {
                                     Row(
                                       children: [
                                         const SizedBox(width: 4),
-                                        Text('(+45) $number'),
+                                        Text('(+45) $number',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                            )),
                                         const SizedBox(width: 4),
                                         InkResponse(
                                           onTap: () => openPhoneApp(number),
