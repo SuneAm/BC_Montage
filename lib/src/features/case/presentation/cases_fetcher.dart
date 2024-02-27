@@ -46,7 +46,10 @@ class CasesFetcher extends ConsumerWidget {
             onTap: hasComments
                 ? () => showDialog(
                       context: context,
-                      builder: (_) => CaseCommentDialog(caseItem.comments),
+                      builder: (_) => CaseCommentDialog(
+                        caseItem.caseNumber,
+                        comments: caseItem.comments,
+                      ),
                     )
                 : null,
             child: Container(
