@@ -40,7 +40,7 @@ class CaseCommentDialog extends StatelessWidget {
                             size: 20, color: Colors.white),
                         const SizedBox(width: 4),
                         Text(
-                          'Vedrørende: $caseNumber', // caseItem.caseNumber
+                          'Note til: $caseNumber', // caseItem.caseNumber
                           style: const TextStyle(
                               fontSize: 18, color: Colors.white),
                           textAlign: TextAlign.center,
