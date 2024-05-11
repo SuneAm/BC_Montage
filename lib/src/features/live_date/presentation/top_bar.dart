@@ -2,27 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ordrestyring_common/ordrestyring_common.dart';
-import 'package:ordrestyring_montage/src/features/vacation/presentation/request_vacation_dialog.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
+    return const DecoratedBox(
+      decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/appbar_background.png'),
           fit: BoxFit.fill,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Clock(),
-            const Text(
+            Text(
               'BC',
               style: TextStyle(
                 fontSize: 22,
@@ -31,8 +30,8 @@ class TopBar extends StatelessWidget {
                 color: Color.fromARGB(255, 228, 0, 0),
               ),
             ),
-            const Spacer(),
-            const Text(
+            Spacer(),
+            Text(
               '                Ordrer i Montage',
               style: TextStyle(
                 fontSize: 18,
@@ -41,14 +40,8 @@ class TopBar extends StatelessWidget {
                 color: Color.fromARGB(255, 53, 53, 53),
               ),
             ),
-            const Spacer(),
-            IconContainer(
-              icon: Icons.add_circle,
-              size: 28,
-              onTap: () => context.openDialog(const RequestVacationDialog()),
-            ),
-            const SizedBox(width: 4),
-            const Text(
+            Spacer(),
+            Text(
               'Dato:',
               style: TextStyle(
                 fontSize: 12,
@@ -58,8 +51,8 @@ class TopBar extends StatelessWidget {
                 color: Color.fromARGB(255, 53, 53, 53),
               ),
             ),
-            const SizedBox(width: 2),
-            const _DateWidget(),
+            SizedBox(width: 2),
+            _DateWidget(),
             // SizedBox(width: 4),
           ],
         ),
