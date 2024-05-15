@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ordrestyring_common/ordrestyring_common.dart';
 import 'package:ordrestyring_montage/src/features/case/presentation/case_comment_dialog.dart';
 
-final _watchMontageCases = StreamProvider<List<Case>>(
-    (ref) => ref.watch(caseRepoProvider).watchMontageCases());
-
 class CasesFetcher extends ConsumerWidget {
   const CasesFetcher({super.key});
 
@@ -23,7 +20,7 @@ class CasesFetcher extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CommonAsyncWidget(
-      asyncValue: ref.watch(_watchMontageCases),
+      asyncValue: ref.watch(watchMontageCases),
       data: (cases) => ListView.builder(
         padding: const EdgeInsets.all(3),
         itemCount: cases.length,
