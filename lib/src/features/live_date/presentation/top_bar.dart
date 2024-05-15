@@ -11,7 +11,7 @@ class TopBar extends StatelessWidget {
     return const DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/appbar_background.png'),
+          image: AssetImage('assets/appbar-background.png'),
           fit: BoxFit.fill,
         ),
       ),

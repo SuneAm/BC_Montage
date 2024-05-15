@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ordrestyring_montage/src/utils/app_theme.dart';
 
-import 'home_page.dart';
+import 'features/home/presentation/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

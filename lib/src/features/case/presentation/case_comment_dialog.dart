@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordrestyring_montage/src/utils/assets_util.dart';
 //import 'package:ordrestyring_montage/src/utils/app_theme.dart';
 
 class CaseCommentDialog extends StatelessWidget {
@@ -27,7 +28,7 @@ class CaseCommentDialog extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/appbar_background.png'),
+                      image: AssetImage(AssetsUtil.appBackground),
                       fit: BoxFit.fill,
                     ),
                   ),
