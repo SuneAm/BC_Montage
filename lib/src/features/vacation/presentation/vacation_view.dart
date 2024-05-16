@@ -10,7 +10,7 @@ class VacationView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedProfile = useState<User?>(null);
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
@@ -35,53 +35,51 @@ class VacationView extends HookConsumerWidget {
             child: CommonAsyncWidget(
               asyncValue: ref.watch(_getApprovedRequestProvider),
               data: (vacations) {
-                return SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const TitleLarge('Anmod om ferie'),
-                      const SizedBox(height: 16),
-                      Consumer(
-                        builder: (_, WidgetRef ref, __) {
-                          final users = ref.watch(usersProvider);
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const TitleLarge('Anmod om ferie'),
+                    const SizedBox(height: 16),
+                    Consumer(
+                      builder: (_, WidgetRef ref, __) {
+                        final users = ref.watch(usersProvider);
 
-                          return DropdownButton<User?>(
-                            hint: const Text('Select Profile'),
-                            value: selectedProfile.value,
-                            isExpanded: true,
-                            onChanged: (User? user) =>
-                                selectedProfile.value = user,
-                            items: users
-                                .map(
-                                  (user) => DropdownMenuItem<User>(
-                                    value: user,
-                                    child: Text(user.fullName),
-                                  ),
-                                )
-                                .toList(),
-                          );
-                        },
-                      ),
-                      if (selectedProfile.value != null)
-                        ...() {
-                          final user = selectedProfile.value!;
-                          final userVacations = vacations
-                              .where((e) => e.user.id == user.id)
-                              .toList();
-                          return [
-                            ...userVacations.map(
-                              (userVacation) => RequestVacationContainer(
-                                key: Key(userVacation.id),
-                                user: user,
-                                vacation: userVacation,
-                              ),
+                        return DropdownButton<User?>(
+                          hint: const Text('Select Profile'),
+                          value: selectedProfile.value,
+                          isExpanded: true,
+                          onChanged: (User? user) =>
+                              selectedProfile.value = user,
+                          items: users
+                              .map(
+                                (user) => DropdownMenuItem<User>(
+                                  value: user,
+                                  child: Text(user.fullName),
+                                ),
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                    if (selectedProfile.value != null)
+                      ...() {
+                        final user = selectedProfile.value!;
+                        final userVacations = vacations
+                            .where((e) => e.user.id == user.id)
+                            .toList();
+                        return [
+                          ...userVacations.map(
+                            (userVacation) => RequestVacationContainer(
+                              key: Key(userVacation.id),
+                              user: user,
+                              vacation: userVacation,
                             ),
-                            RequestVacationContainer(user: user),
-                          ];
-                        }()
-                      // ...vacations.map((vacation) => )
-                    ],
-                  ),
+                          ),
+                          RequestVacationContainer(user: user),
+                        ];
+                      }()
+                    // ...vacations.map((vacation) => )
+                  ],
                 );
               },
             ),
