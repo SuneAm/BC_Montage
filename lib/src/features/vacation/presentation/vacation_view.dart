@@ -71,11 +71,45 @@ class VacationView extends HookConsumerWidget {
                           ...userVacations.map(
                             (userVacation) => RequestVacationContainer(
                               key: Key(userVacation.id),
-                              user: user,
                               vacation: userVacation,
                             ),
                           ),
-                          RequestVacationContainer(user: user),
+                          RequestVacationContainer(
+                            onCreateVacation: (dateTimeRange) async {
+                              final startDate = dateTimeRange.start;
+                              final endDate = dateTimeRange.end;
+
+                              final isValid = isVacationValid(
+                                startDate,
+                                endDate,
+                                userVacations,
+                              );
+
+                              if (!isValid) {
+                                context.showSnackBar(
+                                    'Vacation request overlaps with an existing vacation');
+                                return;
+                              }
+
+                              // saving request now
+                              final vacation = Vacation(
+                                createdAt: DateTime.now(),
+                                user: user,
+                                startDate: dateTimeRange.start,
+                                endDate: dateTimeRange.end,
+                              );
+
+                              await ref
+                                  .read(vacationRepoProvider)
+                                  .createVacationRequest(vacation);
+
+                              if (context.mounted) {
+                                context.showSnackBar(
+                                    'Vacation Request Send For ${user.fullName}');
+                                selectedProfile.value = null;
+                              }
+                            },
+                          ),
                         ];
                       }()
                     // ...vacations.map((vacation) => )
@@ -87,5 +121,41 @@ class VacationView extends HookConsumerWidget {
         ],
       ),
     );
+  }
+
+  bool isVacationValid(
+    DateTime newStartDate,
+    DateTime newEndDate,
+    List<Vacation> userVacations,
+  ) {
+    // Iterate through each existing vacation for the user
+    for (var vacation in userVacations) {
+      final adjustedStartDate = DateTime(
+        vacation.startDate.year,
+        vacation.startDate.month,
+        vacation.startDate.day,
+      );
+
+      final adjustedEndDate = DateTime(
+        vacation.endDate.year,
+        vacation.endDate.month,
+        vacation.endDate.day,
+      );
+
+      // Check if the new vacation's start or end date falls within any existing vacation range
+      if (HelperMethod.isWithinRange(
+              newStartDate, adjustedStartDate, adjustedEndDate) ||
+          HelperMethod.isWithinRange(
+              newEndDate, adjustedStartDate, adjustedEndDate) ||
+          HelperMethod.isWithinRange(
+              adjustedStartDate, newStartDate, newEndDate) ||
+          HelperMethod.isWithinRange(
+              adjustedEndDate, newStartDate, newEndDate)) {
+        return false; // Invalid if there's any overlap
+      }
+    }
+
+    // If all conditions are satisfied, the vacation request is valid
+    return true;
   }
 }

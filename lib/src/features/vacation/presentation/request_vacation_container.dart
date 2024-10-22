@@ -3,13 +3,13 @@ import 'package:ordrestyring_common/ordrestyring_common.dart';
 
 class RequestVacationContainer extends HookConsumerWidget {
   const RequestVacationContainer({
-    required this.user,
     this.vacation,
+    this.onCreateVacation,
     super.key,
   });
 
-  final User? user;
   final Vacation? vacation;
+  final void Function(DateTimeRange datesRange)? onCreateVacation;
 
   bool get isPreviewing => vacation != null;
 
@@ -56,29 +56,18 @@ class RequestVacationContainer extends HookConsumerWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
+                  child: const Text('Send Request'),
                   onPressed: () async {
-                    final profile = user;
+                    final dateRange = dateTimeRange.value;
+                    if (dateRange == null) return;
 
-                    if (profile == null || dateTimeRange.value == null) return;
-
-                    // saving request now
-                    final vacation = Vacation(
-                      createdAt: DateTime.now(),
-                      user: profile,
-                      startDate: dateTimeRange.value!.start,
-                      endDate: dateTimeRange.value!.end,
-                    );
-
-                    await ref
-                        .read(vacationRepoProvider)
-                        .createVacationRequest(vacation);
+                    onCreateVacation?.call(dateRange);
 
                     if (context.mounted) {
-                      context.showSnackBar('Vacation Request Send');
-                      dateTimeRange.value = null;
+                      // context.showSnackBar('Vacation Request Send');
+                      // dateTimeRange.value = null;
                     }
                   },
-                  child: const Text('Send Request'),
                 ),
               ),
             ],
