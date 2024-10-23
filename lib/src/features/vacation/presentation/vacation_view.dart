@@ -79,14 +79,32 @@ class VacationView extends HookConsumerWidget {
                               final startDate = dateTimeRange.start;
                               final endDate = dateTimeRange.end;
 
-                              final isValid = userVacations.isVacationValid(
+                              final isUserVacationRangeValid =
+                                  userVacations.isVacationValid(
                                 startDate,
                                 endDate,
                               );
 
-                              if (!isValid) {
+                              if (!isUserVacationRangeValid) {
                                 context.showSnackBar(
                                     'Vacation request overlaps with an existing vacation');
+                                return;
+                              }
+
+                              final companyHolidays =
+                                  await ref.read(getHolidaysProvider.future);
+
+                              final isVacationValidWithCompany =
+                                  companyHolidays.isVacationValid(
+                                startDate,
+                                endDate,
+                              );
+
+                              if (!isVacationValidWithCompany) {
+                                if (context.mounted) {
+                                  context.showSnackBar(
+                                      'Vacation request overlaps with company holidays');
+                                }
                                 return;
                               }
 
