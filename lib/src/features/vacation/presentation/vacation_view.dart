@@ -79,10 +79,9 @@ class VacationView extends HookConsumerWidget {
                               final startDate = dateTimeRange.start;
                               final endDate = dateTimeRange.end;
 
-                              final isValid = isVacationValid(
+                              final isValid = userVacations.isVacationValid(
                                 startDate,
                                 endDate,
-                                userVacations,
                               );
 
                               if (!isValid) {
@@ -121,41 +120,5 @@ class VacationView extends HookConsumerWidget {
         ],
       ),
     );
-  }
-
-  bool isVacationValid(
-    DateTime newStartDate,
-    DateTime newEndDate,
-    List<Vacation> userVacations,
-  ) {
-    // Iterate through each existing vacation for the user
-    for (var vacation in userVacations) {
-      final adjustedStartDate = DateTime(
-        vacation.startDate.year,
-        vacation.startDate.month,
-        vacation.startDate.day,
-      );
-
-      final adjustedEndDate = DateTime(
-        vacation.endDate.year,
-        vacation.endDate.month,
-        vacation.endDate.day,
-      );
-
-      // Check if the new vacation's start or end date falls within any existing vacation range
-      if (HelperMethod.isWithinRange(
-              newStartDate, adjustedStartDate, adjustedEndDate) ||
-          HelperMethod.isWithinRange(
-              newEndDate, adjustedStartDate, adjustedEndDate) ||
-          HelperMethod.isWithinRange(
-              adjustedStartDate, newStartDate, newEndDate) ||
-          HelperMethod.isWithinRange(
-              adjustedEndDate, newStartDate, newEndDate)) {
-        return false; // Invalid if there's any overlap
-      }
-    }
-
-    // If all conditions are satisfied, the vacation request is valid
-    return true;
   }
 }
