@@ -74,57 +74,59 @@ class VacationView extends HookConsumerWidget {
                               vacation: userVacation,
                             ),
                           ),
-                          RequestVacationContainer(
-                            onCreateVacation: (dateTimeRange) async {
-                              final startDate = dateTimeRange.start;
-                              final endDate = dateTimeRange.end;
+                          Consumer(
+                            builder: (context, ref, child) {
+                              final holidays = ref.watch(holidaysProvider);
+                              return RequestVacationContainer(
+                                onCreateVacation: (dateTimeRange) async {
+                                  final startDate = dateTimeRange.start;
+                                  final endDate = dateTimeRange.end;
 
-                              final isUserVacationRangeValid =
-                                  userVacations.isVacationValid(
-                                startDate,
-                                endDate,
+                                  final isUserVacationRangeValid =
+                                      userVacations.isVacationValid(
+                                    startDate,
+                                    endDate,
+                                  );
+
+                                  if (!isUserVacationRangeValid) {
+                                    context.showSnackBar(
+                                        'Vacation request overlaps with an existing vacation');
+                                    return;
+                                  }
+
+                                  final isVacationValidWithCompany =
+                                      holidays.isVacationValid(
+                                    startDate,
+                                    endDate,
+                                  );
+
+                                  if (!isVacationValidWithCompany) {
+                                    if (context.mounted) {
+                                      context.showSnackBar(
+                                          'Vacation request overlaps with company holidays');
+                                    }
+                                    return;
+                                  }
+
+                                  // saving request now
+                                  final vacation = Vacation(
+                                    createdAt: DateTime.now(),
+                                    user: user,
+                                    startDate: dateTimeRange.start,
+                                    endDate: dateTimeRange.end,
+                                  );
+
+                                  await ref
+                                      .read(vacationRepoProvider)
+                                      .createVacationRequest(vacation);
+
+                                  if (context.mounted) {
+                                    context.showSnackBar(
+                                        'Vacation Request Send For ${user.fullName}');
+                                    selectedProfile.value = null;
+                                  }
+                                },
                               );
-
-                              if (!isUserVacationRangeValid) {
-                                context.showSnackBar(
-                                    'Vacation request overlaps with an existing vacation');
-                                return;
-                              }
-
-                              final companyHolidays =
-                                  await ref.read(getHolidaysProvider.future);
-
-                              final isVacationValidWithCompany =
-                                  companyHolidays.isVacationValid(
-                                startDate,
-                                endDate,
-                              );
-
-                              if (!isVacationValidWithCompany) {
-                                if (context.mounted) {
-                                  context.showSnackBar(
-                                      'Vacation request overlaps with company holidays');
-                                }
-                                return;
-                              }
-
-                              // saving request now
-                              final vacation = Vacation(
-                                createdAt: DateTime.now(),
-                                user: user,
-                                startDate: dateTimeRange.start,
-                                endDate: dateTimeRange.end,
-                              );
-
-                              await ref
-                                  .read(vacationRepoProvider)
-                                  .createVacationRequest(vacation);
-
-                              if (context.mounted) {
-                                context.showSnackBar(
-                                    'Vacation Request Send For ${user.fullName}');
-                                selectedProfile.value = null;
-                              }
                             },
                           ),
                         ];

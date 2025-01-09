@@ -19,183 +19,180 @@ class CasesFetcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CommonAsyncWidget(
-      asyncValue: ref.watch(watchMontageCases),
-      data: (cases) => ListView.builder(
-        padding: const EdgeInsets.all(3),
-        itemCount: cases.length,
-        itemBuilder: (context, index) {
-          final caseItem = cases[index];
+    final cases = ref.watch(montageCasesProvider);
+    return ListView.builder(
+      padding: const EdgeInsets.all(3),
+      itemCount: cases.length,
+      itemBuilder: (context, index) {
+        final caseItem = cases[index];
 
-          final budget = caseItem.estimatedHours.montageEstimatedHour;
-          final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
+        final budget = caseItem.estimatedHours.montageEstimatedHour;
+        final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
-          final address = caseItem.deliveryAddress?.address;
-          final postalCode = caseItem.deliveryAddress?.postalCode ?? '';
-          final city = caseItem.deliveryAddress?.city ?? '';
+        final address = caseItem.deliveryAddress?.address;
+        final postalCode = caseItem.deliveryAddress?.postalCode ?? '';
+        final city = caseItem.deliveryAddress?.city ?? '';
 
-          final hasComments =
-              caseItem.comments != null && caseItem.comments!.isNotEmpty;
+        final hasComments =
+            caseItem.comments != null && caseItem.comments!.isNotEmpty;
 
-          final contactPersons = caseItem.contactPersons ?? [];
+        final contactPersons = caseItem.contactPersons ?? [];
 
-          return InkWell(
-            onTap: hasComments
-                ? () => showDialog(
-                      context: context,
-                      builder: (_) => CaseCommentDialog(
-                        caseItem.caseNumber,
-                        comments: caseItem.comments,
-                      ),
-                    )
-                : null,
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 6.0),
-              margin: const EdgeInsets.only(bottom: 4),
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(6.0),
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  const SizedBox(width: 2),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              caseItem.caseNumber,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+        return InkWell(
+          onTap: hasComments
+              ? () => showDialog(
+                    context: context,
+                    builder: (_) => CaseCommentDialog(
+                      caseItem.caseNumber,
+                      comments: caseItem.comments,
+                    ),
+                  )
+              : null,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 6.0),
+            margin: const EdgeInsets.only(bottom: 4),
+            decoration: BoxDecoration(
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(6.0),
+              color: Colors.white,
+            ),
+            child: Row(
+              children: [
+                const SizedBox(width: 2),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            caseItem.caseNumber,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
+                          ),
 
-                            if (hasComments) ...[
-                              const SizedBox(width: 6),
-                              const Icon(Icons.comment, size: 20),
-                            ],
-                            const Spacer(),
-
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Timer brugt", style: medNumbers),
-                                const SizedBox(height: 2),
-                                ProgressBar(
-                                  width: 140,
-                                  limit: budget,
-                                  used: hourSpent,
-                                  showUsed: hourSpent,
-                                  // from sunes fix
-                                  height: 16,
-                                  usedFontSize: 11,
-                                )
-                              ],
-                            ),
-                            //const SizedBox(width: 16),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Budget", style: medNumbers),
-                                const SizedBox(height: 2),
-                                Text(
-                                  budget.toStringAsFixed(0),
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          if (hasComments) ...[
+                            const SizedBox(width: 6),
+                            const Icon(Icons.comment, size: 20),
                           ],
-                        ),
-                        //const SizedBox(height: 2),
+                          const Spacer(),
 
-                        Text(
-                          caseItem.responsibleUser.fullName,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            // color: Color.fromARGB(255, 49, 49, 49),
-                          ),
-                        ),
-                        Text(
-                          caseItem.projectName,
-                          style: const TextStyle(
-                            fontSize: 11,
-                          ),
-                        ),
-
-                        if (address != null) ...[
-                          const SizedBox(height: 6),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              InkResponse(
-                                onTap: () => openInGoogleMap(address),
-                                child: const Icon(Icons.location_on),
-                              ),
-                              const SizedBox(width: 4),
-                              Expanded(
-                                child: Text(
-                                  '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                  ),
+                              Text("Timer brugt", style: medNumbers),
+                              const SizedBox(height: 2),
+                              ProgressBar(
+                                width: 140,
+                                limit: budget,
+                                used: hourSpent,
+                                showUsed: hourSpent,
+                                // from sunes fix
+                                height: 16,
+                                usedFontSize: 11,
+                              )
+                            ],
+                          ),
+                          //const SizedBox(width: 16),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Budget", style: medNumbers),
+                              const SizedBox(height: 2),
+                              Text(
+                                budget.toStringAsFixed(0),
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
                         ],
-                        if (contactPersons.isNotEmpty)
-                          ...contactPersons.map(
-                            (person) {
-                              final name = person.name;
-                              final number = person.phoneNumber;
-                              return Row(
-                                children: [
-                                  const Text(
-                                    'Kontaktperson:',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  if (name.isNotEmpty) Text(name),
-                                  if (number.isNotEmpty)
-                                    Row(
-                                      children: [
-                                        const SizedBox(width: 4),
-                                        Text('(+45) $number',
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                            )),
-                                        const SizedBox(width: 4),
-                                        InkResponse(
-                                          onTap: () => openPhoneApp(number),
-                                          child: const Icon(Icons.phone),
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              );
-                            },
-                          ),
+                      ),
+                      //const SizedBox(height: 2),
+
+                      Text(
+                        caseItem.responsibleUser.fullName,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          // color: Color.fromARGB(255, 49, 49, 49),
+                        ),
+                      ),
+                      Text(
+                        caseItem.projectName,
+                        style: const TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+
+                      if (address != null) ...[
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            InkResponse(
+                              onTap: () => openInGoogleMap(address),
+                              child: const Icon(Icons.location_on),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                '$address${postalCode.isNotEmpty ? ', $postalCode' : ''} $city',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
-                    ),
+                      if (contactPersons.isNotEmpty)
+                        ...contactPersons.map(
+                          (person) {
+                            final name = person.name;
+                            final number = person.phoneNumber;
+                            return Row(
+                              children: [
+                                const Text(
+                                  'Kontaktperson:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                if (name.isNotEmpty) Text(name),
+                                if (number.isNotEmpty)
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        '(+45) $number',
+                                        style: const TextStyle(fontSize: 11),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      InkResponse(
+                                        onTap: () => openPhoneApp(number),
+                                        child: const Icon(Icons.phone),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
