@@ -26,7 +26,7 @@ class CasesFetcher extends ConsumerWidget {
       itemBuilder: (context, index) {
         final caseItem = cases[index];
 
-        final budget = caseItem.estimatedHours.montageEstimatedHour;
+        final budget = caseItem.estimatedHours.estimatedMontageHour;
         final hourSpent = caseItem.hourAggregate?.montageHourSpent ?? 0;
 
         final address = caseItem.deliveryAddress?.address;
