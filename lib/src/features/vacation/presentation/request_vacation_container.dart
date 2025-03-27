@@ -9,17 +9,18 @@ class RequestVacationContainer extends HookConsumerWidget {
   });
 
   final Vacation? vacation;
-  final void Function(DateTimeRange datesRange)? onCreateVacation;
+  final void Function(TZDateTimeRange datesRange)? onCreateVacation;
 
   bool get isPreviewing => vacation != null;
 
-  DateTimeRange? get vacationDateRange => vacation != null
-      ? DateTimeRange(start: vacation!.startDate, end: vacation!.endDate)
+  TZDateTimeRange? get vacationDateRange => vacation != null
+      ? TZDateTimeRange(
+          start: vacation!.calendar.startDate, end: vacation!.calendar.endDate)
       : null;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateTimeRange = useState<DateTimeRange?>(vacationDateRange);
+    final dateTimeRange = useState<TZDateTimeRange?>(vacationDateRange);
 
     return ConstrainedBox(
       key: key,
@@ -86,7 +87,7 @@ class _DateContainer extends ConsumerWidget {
     this.vacationId,
   });
 
-  final DateTimeRange? dateTimeRange;
+  final TZDateTimeRange? dateTimeRange;
   final Color backgroundColor;
   final VoidCallback? onStartDate;
   final String? vacationId;

@@ -9,7 +9,7 @@ class VacationView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedProfile = useState<User?>(null);
+    final selectedProfile = useState<UserInfo?>(null);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
@@ -44,16 +44,15 @@ class VacationView extends HookConsumerWidget {
                       builder: (_, WidgetRef ref, __) {
                         final users = ref.watch(usersProvider);
 
-                        return DropdownButton<User?>(
+                        return DropdownButton<UserInfo?>(
                           hint: const Text('Select Profile'),
                           value: selectedProfile.value,
                           isExpanded: true,
-                          onChanged: (User? user) =>
-                              selectedProfile.value = user,
+                          onChanged: (user) => selectedProfile.value = user,
                           items: users
                               .map(
-                                (user) => DropdownMenuItem<User>(
-                                  value: user,
+                                (user) => DropdownMenuItem<UserInfo>(
+                                  value: user.toUserInfo,
                                   child: Text(user.fullName),
                                 ),
                               )
@@ -112,13 +111,16 @@ class VacationView extends HookConsumerWidget {
                                   final vacation = Vacation(
                                     createdAt: DateTime.now(),
                                     user: user,
-                                    startDate: dateTimeRange.start,
-                                    endDate: dateTimeRange.end,
+                                    calendar: DateCalendar(
+                                      color: DateCalendarColor.blue,
+                                      startDate: dateTimeRange.start,
+                                      endDate: dateTimeRange.end,
+                                    ),
                                   );
 
                                   await ref
                                       .read(vacationRepoProvider)
-                                      .createVacationRequest(vacation);
+                                      .createVacation(vacation);
 
                                   if (context.mounted) {
                                     context.showSnackBar(
