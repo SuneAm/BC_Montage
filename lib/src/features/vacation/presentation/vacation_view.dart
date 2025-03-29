@@ -109,7 +109,7 @@ class VacationView extends HookConsumerWidget {
 
                                   // saving request now
                                   final vacation = Vacation(
-                                    createdAt: DateTime.now(),
+                                    createdAt: TimeZoneHelper.nowInCopenhagen(),
                                     user: user,
                                     calendar: DateCalendar(
                                       color: DateCalendarColor.blue,

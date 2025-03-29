@@ -72,11 +72,11 @@ class _DateWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDate = useState(DateTime.now());
+    final currentDate = useState(TimeZoneHelper.nowInCopenhagen());
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
-        final newDate = DateTime.now();
+        final newDate = TimeZoneHelper.nowInCopenhagen();
         if (!isSameDay(currentDate.value, newDate)) {
           currentDate.value = newDate;
         }
